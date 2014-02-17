@@ -1,0 +1,12 @@
+name: MineReset
+main: com.wolvencraft.minereset.MineReset
+version: 1.0
+authors: [bitWolfy]
+commands:
+    mine:
+        description: MineReset main command
+        permission: minereset.admin
+permissions:
+    minereset.admin:
+        default: op
+          

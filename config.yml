@@ -1,0 +1,7 @@
+unity:
+    chat:
+        success: "[Unity]"
+        failure: "[Unity]"
+        info: "[Unity]"
+    misc:
+        debug: false
