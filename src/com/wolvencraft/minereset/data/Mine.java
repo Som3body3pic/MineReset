@@ -32,7 +32,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import com.wolvencraft.minereset.MineReset;
+import com.wolvencraft.minereset.data.flags.CompiledFlagList;
 import com.wolvencraft.unity.util.Message;
+import com.wolvencraft.unity.world.WorldRegion;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -50,17 +52,19 @@ public class Mine implements ConfigurationSerializable {
     private String id;
     private String name;
     
-    private WorldRegion region;
+    private WorldRegion resetArea;
+    
+    private CompiledFlagList flags;
     
     public Mine(WorldRegion region) {
-        this.region = region.clone();
+        this.resetArea = region.clone();
     }
     
     public Mine(Map<String, Object> map) {
         id = (String) map.get("id");
         name = (String) map.get("name");
         
-        region = (WorldRegion) map.get("region");
+        resetArea = (WorldRegion) map.get("region");
     }
     
     @Override
@@ -68,7 +72,7 @@ public class Mine implements ConfigurationSerializable {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("id", id);
         map.put("name", name);
-        map.put("region", region);
+        map.put("region", resetArea);
         return map;
     }
     
@@ -77,7 +81,7 @@ public class Mine implements ConfigurationSerializable {
      * @return <b>true</b> if the save was successful, <b>false</b> if an error occurred
      */
     public boolean saveFile() {
-        File mineFile = new File(new File(MineReset.getInstance().getDataFolder(), "mines"), id + ".mdata.yml");
+        File mineFile = new File(new File(MineReset.getInstance().getDataFolder(), "data"), id + ".mdata.yml");
         FileConfiguration mineConf =  YamlConfiguration.loadConfiguration(mineFile);
         mineConf.set("mine", this);
         try {
@@ -96,7 +100,7 @@ public class Mine implements ConfigurationSerializable {
      * @return <b>true</b> if the deletion was successful, <b>false</b> if an error occurred
      */
     public boolean deleteFile() {
-        File mineFolder = new File(MineReset.getInstance().getDataFolder(), "mines");
+        File mineFolder = new File(MineReset.getInstance().getDataFolder(), "data");
         if(!mineFolder.exists() || !mineFolder.isDirectory()) return false;
          
         File[] mineFiles = mineFolder.listFiles(new FileFilter() {

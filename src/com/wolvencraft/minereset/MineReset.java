@@ -20,8 +20,9 @@
 
 package com.wolvencraft.minereset;
 
+import com.wolvencraft.unity.UnityCommandManager;
 import com.wolvencraft.unity.UnityPlugin;
-import com.wolvencraft.unity.version.PluginVersion;
+import com.wolvencraft.unity.util.PluginVersion;
 
 /**
  * Main MineReset class
@@ -35,6 +36,8 @@ public class MineReset extends UnityPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        
+        UnityCommandManager.bindCommand("mine", PluginCommands.values());
     }
     
     @Override
